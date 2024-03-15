@@ -1,4 +1,4 @@
-FROM maven:3.9.2-eclipse-temurin-17-alpine as builder
+FROM maven:3.9.6-eclipse-temurin-21-alpine as builder
 
 # Copy local code to the container image.
 WORKDIR /app
@@ -8,7 +8,7 @@ COPY src ./src
 # Build a release artifact.
 RUN mvn package -DskipTests
 
-FROM openjdk:17-jdk-slim
+FROM --platform=${TARGETARCH} openjdk:21-jdk-slim
 
 # Copy the jar to the production image from the builder stage.
 COPY --from=builder /app/target/fib-boot-func*.jar /fib-boot-func.jar
