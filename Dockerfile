@@ -14,4 +14,4 @@ FROM --platform=${TARGETARCH} openjdk:21-jdk-slim
 COPY --from=builder /app/target/fib-boot-func*.jar /fib-boot-func.jar
 
 # Run the web service on container startup.
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/fib-boot-func.jar"]
+CMD ["java", "-XX:+PreserveFramePointer","-Djava.security.egd=file:/dev/./urandom", "-jar", "/fib-boot-func.jar"]
